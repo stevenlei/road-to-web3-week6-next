@@ -753,7 +753,7 @@ export default function Home() {
                       <div className="text-center text-3xl text-indigo-700">
                         {stakedBalance > 0
                           ? `Staked ${stakedBalance} ETH`
-                          : "0 ETH"}
+                          : "Not Staked"}
                       </div>
                     </div>
                     <div className="flex-1">
