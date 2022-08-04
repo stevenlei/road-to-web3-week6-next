@@ -643,6 +643,15 @@ export default function Home() {
         >
           ➡️ Amazing tutorial here
         </a>
+        <br />
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://twitter.com/stevenkin"
+          className="mt-6 bg-slate-800 text-slate-300 rounded-full text-sm inline-block py-2 px-4 hover:bg-slate-700"
+        >
+          Follow me @stevenkin
+        </a>
       </p>
     </>
   );
