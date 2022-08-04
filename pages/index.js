@@ -129,7 +129,6 @@ export default function Home() {
   };
 
   const ensureOnNetwork = async () => {
-    return;
     try {
       const { ethereum } = window;
 
