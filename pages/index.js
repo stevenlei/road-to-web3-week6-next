@@ -601,13 +601,9 @@ export default function Home() {
     }
   };
 
-  const loadingIcon = (
-    color = "text-white",
-    size = 6,
-    additionalClass = ""
-  ) => (
+  const loadingIcon = (color = "text-white") => (
     <svg
-      className={`animate-spin mt-1 h-${size} w-${size} ${color} inline-block ${additionalClass}`}
+      className={`animate-spin mt-1 h-6 w-6 ${color} inline-block`}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
@@ -686,7 +682,7 @@ export default function Home() {
                       onClick={withdraw}
                     >
                       {isWithdrawing
-                        ? loadingIcon("text-slate-500", 6, "mt-0 -mt-1")
+                        ? loadingIcon("text-slate-500")
                         : "Withdraw"}
                     </button>
                   </div>
