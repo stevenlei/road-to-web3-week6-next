@@ -30,8 +30,7 @@ export default function Home() {
   const [currentGas, setCurrentGas] = useState(0);
 
   const [walletBalanceBigNumber, setWalletBalanceBigNumber] = useState(null);
-  const [availableBalanceForDeposit, setAvailableBalanceForDeposit] =
-    useState(null);
+  const [availableBalanceForDeposit, setAvailableBalanceForDeposit] = useState(null);
 
   // Stake
   const [stakedBalance, setStakedBalance] = useState(0);
@@ -44,8 +43,7 @@ export default function Home() {
   const [treasuryStakers, setTreasuryStakers] = useState(0);
   const [treasuryMinStakeSeconds, setTreasuryMinStakeSeconds] = useState(0);
   const [treasuryMaxStakeSeconds, setTreasuryMaxStakeSeconds] = useState(0);
-  const [treasuryWithdrawalEndSeconds, setTreasuryWithdrawalEndSeconds] =
-    useState(0);
+  const [treasuryWithdrawalEndSeconds, setTreasuryWithdrawalEndSeconds] = useState(0);
 
   useEffect(() => {
     checkIfWalletIsConnected();
@@ -177,11 +175,7 @@ export default function Home() {
 
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
-        const stake = new ethers.Contract(
-          STAKE_CONTRACT_ADDRESS,
-          STAKE_CONTRACT_ABI.abi,
-          provider
-        );
+        const stake = new ethers.Contract(STAKE_CONTRACT_ADDRESS, STAKE_CONTRACT_ABI.abi, provider);
 
         const balance = await stake.getBalance(walletAddress);
         let remainder = balance.mod(1e14);
@@ -200,11 +194,7 @@ export default function Home() {
 
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
-        const stake = new ethers.Contract(
-          STAKE_CONTRACT_ADDRESS,
-          STAKE_CONTRACT_ABI.abi,
-          provider
-        );
+        const stake = new ethers.Contract(STAKE_CONTRACT_ADDRESS, STAKE_CONTRACT_ABI.abi, provider);
 
         const balance = await stake.getStake(walletAddress);
         let remainder = balance.mod(1e14);
@@ -230,9 +220,7 @@ export default function Home() {
         const availableBalance = walletBalanceBigNumber.sub(depositGas);
 
         let remainder = availableBalance.mod(1e14);
-        let availableBalanceInEth = ethers.utils.formatEther(
-          availableBalance.sub(remainder)
-        );
+        let availableBalanceInEth = ethers.utils.formatEther(availableBalance.sub(remainder));
 
         setAvailableBalanceForDeposit(+availableBalanceInEth);
       }
@@ -256,11 +244,7 @@ export default function Home() {
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
-        const stake = new ethers.Contract(
-          STAKE_CONTRACT_ADDRESS,
-          STAKE_CONTRACT_ABI.abi,
-          signer
-        );
+        const stake = new ethers.Contract(STAKE_CONTRACT_ADDRESS, STAKE_CONTRACT_ABI.abi, signer);
 
         const tx = await signer.sendTransaction({
           from: walletAddress,
@@ -292,11 +276,7 @@ export default function Home() {
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
-        const stake = new ethers.Contract(
-          STAKE_CONTRACT_ADDRESS,
-          STAKE_CONTRACT_ABI.abi,
-          signer
-        );
+        const stake = new ethers.Contract(STAKE_CONTRACT_ADDRESS, STAKE_CONTRACT_ABI.abi, signer);
 
         const tx = await stake.withdraw();
 
@@ -332,11 +312,7 @@ export default function Home() {
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
-        const stake = new ethers.Contract(
-          STAKE_CONTRACT_ADDRESS,
-          STAKE_CONTRACT_ABI.abi,
-          signer
-        );
+        const stake = new ethers.Contract(STAKE_CONTRACT_ADDRESS, STAKE_CONTRACT_ABI.abi, signer);
 
         const tx = await stake.stake(ethers.utils.parseEther(stakeAmount));
 
@@ -362,16 +338,8 @@ export default function Home() {
 
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
-        const stake = new ethers.Contract(
-          STAKE_CONTRACT_ADDRESS,
-          STAKE_CONTRACT_ABI.abi,
-          provider
-        );
-        const treasury = new ethers.Contract(
-          TREASURY_CONTRACT_ADDRESS,
-          TREASURY_CONTRACT_ABI.abi,
-          provider
-        );
+        const stake = new ethers.Contract(STAKE_CONTRACT_ADDRESS, STAKE_CONTRACT_ABI.abi, provider);
+        const treasury = new ethers.Contract(TREASURY_CONTRACT_ADDRESS, TREASURY_CONTRACT_ABI.abi, provider);
 
         const [
           _treasuryBalance,
@@ -391,14 +359,10 @@ export default function Home() {
 
         setTreasuryBalance(ethers.utils.formatEther(_treasuryBalance));
         setTreasuryStakers(_stakers.toNumber());
-        setStakeTime(
-          _stakeTime.toNumber() ? _stakeTime.toNumber() * 1000 : null
-        );
+        setStakeTime(_stakeTime.toNumber() ? _stakeTime.toNumber() * 1000 : null);
         setTreasuryMinStakeSeconds(_minStakeSeconds.toNumber());
         setTreasuryMaxStakeSeconds(_maxStakeSeconds.toNumber());
-        setTreasuryWithdrawalEndSeconds(
-          _withdrawalPeriodEndsSeconds.toNumber()
-        );
+        setTreasuryWithdrawalEndSeconds(_withdrawalPeriodEndsSeconds.toNumber());
 
         console.log(_minStakeSeconds.toNumber());
       }
@@ -410,10 +374,8 @@ export default function Home() {
   const canUnstake = () => {
     if (stakeTime) {
       const now = new Date();
-      const exceededMinStake =
-        stakeTime + treasuryMinStakeSeconds * 1000 - now < 0;
-      const exceededWithdrawal =
-        stakeTime + treasuryWithdrawalEndSeconds * 1000 - now < 0;
+      const exceededMinStake = stakeTime + treasuryMinStakeSeconds * 1000 - now < 0;
+      const exceededWithdrawal = stakeTime + treasuryWithdrawalEndSeconds * 1000 - now < 0;
 
       return exceededMinStake && !exceededWithdrawal;
     }
@@ -431,11 +393,7 @@ export default function Home() {
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
-        const stake = new ethers.Contract(
-          STAKE_CONTRACT_ADDRESS,
-          STAKE_CONTRACT_ABI.abi,
-          signer
-        );
+        const stake = new ethers.Contract(STAKE_CONTRACT_ADDRESS, STAKE_CONTRACT_ABI.abi, signer);
 
         const tx = await stake.unstake();
         await tx.wait();
@@ -471,16 +429,9 @@ export default function Home() {
 
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
-      const contract = new ethers.Contract(
-        CONTRACT_ADDRESS,
-        CONTRACT_ABI.abi,
-        signer
-      );
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI.abi, signer);
 
-      const amount =
-        coffeeSize === "S"
-          ? ethers.utils.parseEther("0.001")
-          : ethers.utils.parseEther("0.003");
+      const amount = coffeeSize === "S" ? ethers.utils.parseEther("0.001") : ethers.utils.parseEther("0.003");
 
       const tx = await contract.buyCoffee(name, message, {
         value: amount,
@@ -509,11 +460,7 @@ export default function Home() {
 
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
-      const contract = new ethers.Contract(
-        CONTRACT_ADDRESS,
-        CONTRACT_ABI.abi,
-        signer
-      );
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI.abi, signer);
 
       const tx = await contract.setMyselfAsRecipient();
       const receipt = await tx.wait();
@@ -537,11 +484,7 @@ export default function Home() {
       const { ethereum } = window;
 
       const provider = new ethers.providers.Web3Provider(ethereum);
-      const contract = new ethers.Contract(
-        CONTRACT_ADDRESS,
-        CONTRACT_ABI.abi,
-        provider
-      );
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI.abi, provider);
 
       const recipient = await contract.recipient();
 
@@ -556,11 +499,7 @@ export default function Home() {
       const { ethereum } = window;
 
       const provider = new ethers.providers.Web3Provider(ethereum);
-      const contract = new ethers.Contract(
-        CONTRACT_ADDRESS,
-        CONTRACT_ABI.abi,
-        provider
-      );
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI.abi, provider);
 
       const balance = await provider.getBalance(contract.address);
 
@@ -575,11 +514,7 @@ export default function Home() {
       const { ethereum } = window;
 
       const provider = new ethers.providers.Web3Provider(ethereum);
-      const contract = new ethers.Contract(
-        CONTRACT_ADDRESS,
-        CONTRACT_ABI.abi,
-        provider
-      );
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI.abi, provider);
 
       const memos = await contract.memos();
 
@@ -608,14 +543,7 @@ export default function Home() {
       fill="none"
       viewBox="0 0 24 24"
     >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      ></circle>
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
       <path
         className="opacity-75"
         fill="currentColor"
@@ -632,8 +560,8 @@ export default function Home() {
         <strong>Week 6</strong>
       </h1>
       <p className="mt-6 text-lg max-w-xl text-gray-400">
-        This is a practice project to learn ethers.js and solidity. The sixth
-        week is to build a &quot;Staking App&quot;.
+        This is a practice project to learn ethers.js and solidity. The sixth week is to build a &quot;Staking
+        App&quot;.
         <br />
         <a
           href="https://docs.alchemy.com/alchemy/road-to-web3/weekly-learning-challenges/6.-how-to-build-a-staking-dapp"
@@ -665,40 +593,28 @@ export default function Home() {
       </Head>
 
       <main className="mx-auto px-6 py-6 lg:p-12">
-        {!walletAddress && (
-          <div className="mb-12 max-w-xl mx-auto">{roadToWeb3Intro()}</div>
-        )}
-        <div className="lg:hidden mb-12">{roadToWeb3Intro()}</div>
+        {!walletAddress && <div className="mb-12 max-w-xl mx-auto">{roadToWeb3Intro()}</div>}
+        {walletAddress && <div className="lg:hidden mb-12">{roadToWeb3Intro()}</div>}
 
         {walletAddress && (
           <div className="flex flex-wrap lg:flex-nowrap">
             <div className="self-start w-full lg:w-1/3 mb-8 lg:mb-0 lg:m-3">
               <div className="self-start w-full bg-white rounded-xl overflow-hidden">
-                <h4 className="text-2xl text-center bg-indigo-700 p-2 text-white">
-                  Your Balance in this App
-                </h4>
+                <h4 className="text-2xl text-center bg-indigo-700 p-2 text-white">Your Balance in this App</h4>
                 <div className="p-4">
-                  <h5 className="text-center p-2 text-xl italic text-gray-400">
-                    Balance
-                  </h5>
+                  <h5 className="text-center p-2 text-xl italic text-gray-400">Balance</h5>
                   <div className="text-center text-3xl text-gray-700">
-                    <span className="block mb-1 text-indigo-700">
-                      {appBalance} ETH
-                    </span>
+                    <span className="block mb-1 text-indigo-700">{appBalance} ETH</span>
                     <button
                       className="bg-slate-300 hover:bg-slate-400 hover:text-slate-100 inline-block text-lg rounded-full text-slate-500 px-3 py-px disabled:bg-slate-100 disabled:text-slate-300"
                       disabled={appBalance === 0 || isWithdrawing}
                       onClick={withdraw}
                     >
-                      {isWithdrawing
-                        ? loadingIcon("text-slate-500")
-                        : "Withdraw"}
+                      {isWithdrawing ? loadingIcon("text-slate-500") : "Withdraw"}
                     </button>
                   </div>
                   <div className="relative mt-8">
-                    <p className="text-right text-slate-400 -mb-1">
-                      Available Balance: {walletBalance} ETH
-                    </p>
+                    <p className="text-right text-slate-400 -mb-1">Available Balance: {walletBalance} ETH</p>
                     <div className="relative">
                       <input
                         type="text"
@@ -733,16 +649,11 @@ export default function Home() {
                       loadingIcon()
                     ) : (
                       <>
-                        Deposit{" "}
-                        <span className="text-3xl relative top-1 left-1">
-                          💵
-                        </span>
+                        Deposit <span className="text-3xl relative top-1 left-1">💵</span>
                       </>
                     )}
                   </button>
-                  {errorDeposit && (
-                    <p className="px-2 py-2 text-red-600">{errorDeposit}</p>
-                  )}
+                  {errorDeposit && <p className="px-2 py-2 text-red-600">{errorDeposit}</p>}
                 </div>
               </div>
 
@@ -750,35 +661,22 @@ export default function Home() {
             </div>
             <div className="self-start w-full lg:w-1/3 mb-8 lg:mb-0 lg:m-3">
               <div className="self-start w-full bg-white rounded-xl overflow-hidden">
-                <h4 className="text-2xl text-center bg-indigo-700 bg- p-2 text-white">
-                  Stake Contract
-                </h4>
+                <h4 className="text-2xl text-center bg-indigo-700 bg- p-2 text-white">Stake Contract</h4>
                 <div className="p-4">
                   <div className="flex w-full">
                     <div className="flex-1">
-                      <h5 className="text-center p-2 text-xl italic text-gray-400">
-                        Status
-                      </h5>
+                      <h5 className="text-center p-2 text-xl italic text-gray-400">Status</h5>
                       <div className="text-center text-3xl text-indigo-700">
-                        {stakedBalance > 0
-                          ? `Staked ${stakedBalance} ETH`
-                          : "Not Staked"}
+                        {stakedBalance > 0 ? `Staked ${stakedBalance} ETH` : "Not Staked"}
                       </div>
                     </div>
                     <div className="flex-1">
-                      <h5 className="text-center p-2 text-xl italic text-gray-400">
-                        Interest Rate
-                      </h5>
-                      <div className="text-center text-3xl text-indigo-700">
-                        {stakeInterestRate}%
-                      </div>
+                      <h5 className="text-center p-2 text-xl italic text-gray-400">Interest Rate</h5>
+                      <div className="text-center text-3xl text-indigo-700">{stakeInterestRate}%</div>
                     </div>
                   </div>
                   <div className="relative mt-6 mb-4">
-                    <img
-                      src="/images/interest-rate.png"
-                      className="w-full rounded-lg"
-                    />
+                    <img src="/images/interest-rate.png" className="w-full rounded-lg" />
                   </div>
                   <div>
                     <div className="relative">
@@ -806,67 +704,48 @@ export default function Home() {
                     </div>
                     <button
                       onClick={stake}
-                      disabled={
-                        isStaking || stakedBalance > 0 || appBalance === 0
-                      }
+                      disabled={isStaking || stakedBalance > 0 || appBalance === 0}
                       className="py-2 px-2 mb-2 pb-3 w-full disabled:bg-indigo-300 bg-indigo-600 hover:bg-indigo-700 shadow rounded-lg text-white text-xl rounded-tl-none rounded-tr-none"
                     >
                       {isStaking ? (
                         loadingIcon()
                       ) : (
                         <>
-                          Stake{" "}
-                          <span className="text-3xl relative left-1">🏦</span>
+                          Stake <span className="text-3xl relative left-1">🏦</span>
                         </>
                       )}
                     </button>
                   </div>
-                  {errorStake && (
-                    <p className="px-4 py-2 text-red-600">{errorStake}</p>
-                  )}
+                  {errorStake && <p className="px-4 py-2 text-red-600">{errorStake}</p>}
                 </div>
               </div>
             </div>
 
             <div className="self-start w-full mt-6 md:mt-3 lg:w-1/3 mb-8 lg:mb-0 lg:m-3 bg-white rounded-xl overflow-hidden">
-              <h4 className="text-2xl text-center bg-indigo-700 p-2 text-white">
-                Treasury Contract
-              </h4>
+              <h4 className="text-2xl text-center bg-indigo-700 p-2 text-white">Treasury Contract</h4>
               <div className="p-4 pb-4">
                 <div className="flex w-full">
                   <div className="flex-1">
-                    <h5 className="text-center p-2 text-xl italic text-gray-400">
-                      Contract Balance
-                    </h5>
-                    <div className="text-center text-3xl text-indigo-700">
-                      {treasuryBalance} ETH
-                    </div>
+                    <h5 className="text-center p-2 text-xl italic text-gray-400">Contract Balance</h5>
+                    <div className="text-center text-3xl text-indigo-700">{treasuryBalance} ETH</div>
                   </div>
                   <div className="flex-1">
-                    <h5 className="text-center p-2 text-xl italic text-gray-400">
-                      Stakers
-                    </h5>
-                    <div className="text-center text-3xl text-indigo-700">
-                      {treasuryStakers}
-                    </div>
+                    <h5 className="text-center p-2 text-xl italic text-gray-400">Stakers</h5>
+                    <div className="text-center text-3xl text-indigo-700">{treasuryStakers}</div>
                   </div>
                 </div>
 
                 <p className="px-4 py-2 bg-gray-200 text-gray-500 rounded-md mt-10 text-center">
-                  Staked assets will be saved into this contract to demo putting
-                  in and getting out assets from the stake contract.
+                  Staked assets will be saved into this contract to demo putting in and getting out assets from the
+                  stake contract.
                 </p>
 
                 <div className="flex w-full mt-8">
                   <div className="flex-1">
-                    <h5 className="text-center p-2 text-xl italic text-gray-400">
-                      Your Stake Time
-                    </h5>
+                    <h5 className="text-center p-2 text-xl italic text-gray-400">Your Stake Time</h5>
                     <div className="text-center text-3xl text-indigo-700">
                       {stakeTime
-                        ? new Date(stakeTime).toLocaleDateString() +
-                          " " +
-                          new Date(stakeTime).toLocaleTimeString()
+                        ? new Date(stakeTime).toLocaleDateString() + " " + new Date(stakeTime).toLocaleTimeString()
                         : "Not Staked"}
                     </div>
                   </div>
@@ -874,40 +753,26 @@ export default function Home() {
 
                 <div className="flex w-full mt-8">
                   <div className="flex-1">
-                    <h5 className="text-center p-2 text-xl italic text-gray-400">
-                      Min. Stake Time
-                    </h5>
+                    <h5 className="text-center p-2 text-xl italic text-gray-400">Min. Stake Time</h5>
                     <div className="text-center text-3xl text-indigo-700">
                       {stakeTime
-                        ? `${new Date(
-                            stakeTime + treasuryMinStakeSeconds * 1000
-                          ).toLocaleTimeString()}`
-                        : `${(treasuryMinStakeSeconds / 60).toFixed(
-                            0
-                          )} minutes`}
+                        ? `${new Date(stakeTime + treasuryMinStakeSeconds * 1000).toLocaleTimeString()}`
+                        : `${(treasuryMinStakeSeconds / 60).toFixed(0)} minutes`}
                     </div>
                   </div>
                   <div className="flex-1">
-                    <h5 className="text-center p-2 text-xl italic text-gray-400">
-                      Max. Stake Time
-                    </h5>
+                    <h5 className="text-center p-2 text-xl italic text-gray-400">Max. Stake Time</h5>
                     <div className="text-center text-3xl text-indigo-700">
                       {stakeTime
-                        ? `${new Date(
-                            stakeTime + treasuryMaxStakeSeconds * 1000
-                          ).toLocaleTimeString()}`
-                        : `${(treasuryMaxStakeSeconds / 60).toFixed(
-                            0
-                          )} minutes`}
+                        ? `${new Date(stakeTime + treasuryMaxStakeSeconds * 1000).toLocaleTimeString()}`
+                        : `${(treasuryMaxStakeSeconds / 60).toFixed(0)} minutes`}
                     </div>
                   </div>
                 </div>
 
                 <div className="flex w-full mt-8">
                   <div className="flex-1">
-                    <h5 className="text-center p-2 text-xl italic text-gray-400">
-                      Withdrawal Period
-                    </h5>
+                    <h5 className="text-center p-2 text-xl italic text-gray-400">Withdrawal Period</h5>
                     <div className="text-center text-3xl text-indigo-700">
                       {stakeTime &&
                         `From ${new Date(
@@ -919,8 +784,7 @@ export default function Home() {
                       {!stakeTime && (
                         <>
                           Within {(treasuryMinStakeSeconds / 60).toFixed(0)} -{" "}
-                          {(treasuryWithdrawalEndSeconds / 60).toFixed(0)}{" "}
-                          minutes after stake.
+                          {(treasuryWithdrawalEndSeconds / 60).toFixed(0)} minutes after stake.
                         </>
                       )}
                     </div>
@@ -936,14 +800,11 @@ export default function Home() {
                     loadingIcon()
                   ) : (
                     <>
-                      Unstake{" "}
-                      <span className="text-3xl relative top-1 left-1">💸</span>
+                      Unstake <span className="text-3xl relative top-1 left-1">💸</span>
                     </>
                   )}
                 </button>
-                {errorUnstake && (
-                  <p className="px-4 py-2 text-red-600">{errorUnstake}</p>
-                )}
+                {errorUnstake && <p className="px-4 py-2 text-red-600">{errorUnstake}</p>}
               </div>
             </div>
           </div>
