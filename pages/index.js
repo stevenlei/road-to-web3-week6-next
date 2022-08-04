@@ -2,8 +2,8 @@ import Head from "next/head";
 import { useState, useEffect } from "react";
 import { ethers, BigNumber } from "ethers";
 
-const STAKE_CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
-const TREASURY_CONTRACT_ADDRESS = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0";
+const STAKE_CONTRACT_ADDRESS = "0xA2D6fa067527ec666eec745dE8aA07C529b27e99";
+const TREASURY_CONTRACT_ADDRESS = "0xc5d492ac06EE58226A437C8473B7dCB34F707507";
 const STAKE_CONTRACT_ABI = require("../contracts/Stake.json");
 const TREASURY_CONTRACT_ABI = require("../contracts/Treasury.json");
 
